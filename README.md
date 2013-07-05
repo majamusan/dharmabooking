@@ -2,7 +2,7 @@
 
 <em>A little open source booking app. This plugin is for tested for Wordpress 3.5+.</em>
 
-<h2>some of the features are </h2>
+<h2>Some of the features are </h2>
 
 <ul>
 <li>Easly customisable and theamed</li>
@@ -13,7 +13,7 @@
 <li>graphical reporting </li>
 </ul>
 
-<h2>Install</h2>
+<h2>Install instructions.</h2>
 
 <ul>
 <li> install plugin</li>
@@ -21,3 +21,6 @@
 <li> configure the "core" and "calendar" sections on the settings</li>
 <li> configure at least one rental</li>
 </ul>
+
+<h2>demo</h2>
+<em>to view a demo click <a href="http://earthling.za.org">here</a>.</em>
