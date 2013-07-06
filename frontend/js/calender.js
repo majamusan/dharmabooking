@@ -164,6 +164,7 @@ function startTimer(){
 	}, 1000);
 }
 function updateMatrix(theStartDate) { 
+	timeCounter = timerBase;
 	jQuery('#rentalCalendar').mask(calenderLoadingString);
 	jQuery('#continue-button').slideUp('slow'); 
 

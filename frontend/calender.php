@@ -20,7 +20,7 @@ class matrixCalender {
       $this->noNights = 	$this->settings['CnoNite'];
 		$this->weekStart = date('Y-m-d', time() + (86400 * $this->settings['cDaysAhead'])); 
 		if(!empty($_GET['noNights'])){
-			$this->noNights = 	$_GET['	'];
+			$this->noNights = 	$_GET['noNights'];
 			$this->weekStart = $_GET['startDate'];
 		}elseif(!empty($_POST['noNights'])){
 			$this->weekStart  	 = $_POST['weekStart'] ;
