@@ -1,4 +1,5 @@
 <?
+require_once('dharmaAdmin.php');
 /* this code is thanks to mataias i have changed it around a little but is almost all thats left of his code*/
 function insertBooking ($idguest, $idroomtype, $beds, $dates, $invoice,$offsets = null ) { // offsets is reall post data array... 
  	global $wpdb;
@@ -36,8 +37,6 @@ function getAvailab($from, $to, $totalAvailability = false) {
 				AND active	= 1
 			GROUP BY	R.menuorder, D.date, B.idroomtype
 			ORDER BY	R.menuorder";
-//echo $sql.'<br>';
-		
 	//this addition to the query is used for the ajax availability request, what i don't think is used anymore....
 	if ($totalAvailability)
 		$sql =	"SELECT idroomtype, minimum, MIN(availab) AS maximum FROM ($sql) Availabilities GROUP BY idroomtype, minimum";
@@ -120,19 +119,17 @@ $calendar = getAvailab($from, $to);
 $roomtypes = getRoomtypesTwo(true);
 
 $url =  PLUGIN_ROOT_URL;
+
+$dharmaAdmin = new dharmaAdmin();
+$dharmaAdmin->includeCSSnDivs();
+$dharmaAdmin->includeScripts();
 ?>
 <?php if(!$checkinpage): ?> 
-	<link type="text/css" href="<?=$url?>libs/css/jquery-ui-1.8.5.custom.css" rel="stylesheet" />	
-	<script type="text/javascript" src="<?=$url?>libs/jquery-1.7.1.min.js"></script>
-	<script type="text/javascript" src="<?=$url?>libs/jquery-ui-1.8.5.custom.min.js"></script>
 	<link type="text/css" href="<?=$url?>admin/styles.css" rel="stylesheet" />	
 	<script type="text/javascript">
 		var guests = <?=json_encode($guests)?>;
 		var bookings = <?=json_encode($bookings)?>;
-		var typoChecker = 1; 
-	</script>
-	<script type="text/javascript" src="<?=$url?>admin/scripts.js"> </script>
-	<script type="text/javascript">
+		var typoChecker = 1;
 	<!--
 	//moved to main script file after code rework
 	jQuery(function () {

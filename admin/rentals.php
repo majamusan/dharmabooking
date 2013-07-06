@@ -54,10 +54,10 @@ jQuery(function () {
 	jQuery('.deleteButton').click(function () {
 		var nameText = jQuery(this).closest('tr').find('.name').val();
      	if (confirm("Are you sure you want to delete \""+nameText+"\" ?")) {
-			jQuery('#deleteItemId').val($(this).closest("tr").find('.rentalId').val());
-			alert(jQuery('#deleteItemId').val());
+			jQuery('#deleteItemId').val(jQuery(this).closest("tr").find('.rentalId').val());
    	   jQuery('#deleteItemForm').submit();
-      }
+		}
+		
 		return false;
 	});
 	jQuery('#saveEditButton').click(function(){

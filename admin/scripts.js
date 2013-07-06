@@ -230,47 +230,6 @@ function SaveRental(input, theRow){
 }
 
 //================================================[charting functions]
-function makeRentalChart(theid,thename,cap){
-/*	
-plot1 = jQuery.jqplot(theid+'-chart', [thedata[theid],lastyear[theid],nextyear[theid]], {
-
-title:'Rentals for '+thename,
-		seriesDefaults:{showMarker:false,rendererOptions: {smooth: true,},},
-		axesDefaults: {rendererOptions: {baselineWidth: 1.5,baselineColor: '#444444',drawBaseline: false}},
-		axes:{
-			xaxis:{
-				renderer:jQuery.jqplot.DateAxisRenderer,         
-				tickRenderer: jQuery.jqplot.CanvasAxisTickRenderer,
-            numberTicks: 12,
-            drawMajorGridlines: false,
-            tickOptions: {formatString: "%b %e",angle: -30}
-			},
-			 yaxis: {
-                renderer: jQuery.jqplot.LogAxisRenderer,
-                rendererOptions: {minorTicks: 1},
-                tickOptions: {showMark: false}
-            }
-		},        
-		highlighter: {show: true,sizeAdjust: 1,tooltipOffset: 9},
-		cursor:{ show: true, zoom: true },        
-		animate: true,    
-		series: [{label: theYears[0] },{label: theYears[1] },{label: theYears[2] }],  
-		legend: {show: true,placement: 'outsideGrid'},
-      canvasOverlay: {
-			show: true,
-			objects: [{horizontalLine: {name: 'capacity',y: cap,lineWidth: 1,color: 'rgb(250,45,36)',xOffset: 0}},]
-		}
-
-   jQuery('.jqplot-highlighter-tooltip').addClass('ui-corner-all')
-   jQuery('#'+theid+'-chart').bind('jqplotDataClick', 
-      function (ev, seriesIndex, pointIndex, data) {
-         jQuery('#'+theid+'-info').slideDown('fast');
-         jQuery('#'+theid+'-info').html('series: '+seriesIndex+', point: '+pointIndex+', data: '+data);
-      }
-   )
-	});
-	*/
-}
 function doOccupacityChart(prefix){	
 	opts = {
       title: prefix+'ly occupacity', 

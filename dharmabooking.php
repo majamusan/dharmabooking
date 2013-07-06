@@ -194,8 +194,8 @@ function dh_install() {
 //------------------------------------------------------------------------------------------------[install default data]
 register_activation_hook(__FILE__,DATABASE_PREFIX.'install_data');
 function dh_install_data() {
-   global $wpdb;
-		$dbversion = 1.7; //also replace in other function...
+	global $wpdb;
+	$dbversion = 1.8; //also replace in other function...
 
 	if(get_option("dharma_db_version") < $dbversion){
 		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
@@ -213,6 +213,15 @@ function dh_install_data() {
 (14, 'final page', 1, 'body', 'body', 'web page body', '<h2 >[fullname] has a booking with us, from [time] on [nicestartdate] until [niceenddate].</h2>\r\n<h2 >For a total of [nicepeople] and [nicenights].</h2>\r\n<p ><big>For the following\r\n[roomtext]\r\n</big></p>\r\n\r\n<h3 >Total with <span ><img class='alignnone size-full wp-image-378' alt='bbh' src='wp-content/uploads/2013/07/bbh.png' width='17' height='15' />$[discountdue], </span><strong >without: $[totaldue]</strong></h3>\r\n<h3 >Your contact details are <small >[email]  [phone]</small></h3>\r\n<p><small>[comment]</small></p>'),
 (15, 'final page', 8, 'roomtext', 'shortcode', '', '<li>[roomname]  [nicepeople]</li>'),
 (16, 'final page', 8, 'textmessage', 'shortcode', '', 'a message was sent to your phone [phone]')";
+		dbDelta( $sql );
+
+		$my_plugin_table = $wpdb->prefix . DATABASE_PREFIX.'templates';
+		$sql = "INSERT INTO `$my_plugin_table` (`id`, `active`, `menuorder`, `name`, `minimum`, `capacity`, `price`, `discount`, `discription`) VALUES (1, 1, 1, 'upper bunglow', 2, 7, 30, 24, '<h2>Auskleiden weg brotkugeln getunchten dammerigen grundstuck flo gut ten</h2>\\r\\n\\r\\n<p>Ein gefallts hinunter stabelle vor schlafen neunzehn gekommen. Mi ward in he lang fiel ja habt ware mehr. Verschwand launischen und gab betrachtet angenommen erhaltenen bei. Wurden laufen solang hol ehe rothfu gut. Wo nachtun da gerbers flecken in er filzhut sagerei. Des herunter kindbett vor nirgends. Taghell wo gelernt ja schoner pa heimweh. Esse hand ans zart filz ist.</p>'),
+(2, 1, 1, 'lower bunglow', 3, 9, 20, 18, '<h2>Auskleiden weg brotkugeln getunchten dammerigen grundstuck flo gut ten</h2>\\r\\n\\r\\n<p>Ein gefallts hinunter stabelle vor schlafen neunzehn gekommen. Mi ward in he lang fiel ja habt ware mehr. Verschwand launischen und gab betrachtet angenommen erhaltenen bei. Wurden laufen solang hol ehe rothfu gut. Wo nachtun da gerbers flecken in er filzhut sagerei. Des herunter kindbett vor nirgends. Taghell wo gelernt ja schoner pa heimweh. Esse hand ans zart filz ist.</p>'),
+(3, 1, 4, 'farm house', 20, 99, 17, 15, '<h2>Auskleiden weg brotkugeln getunchten dammerigen grundstuck flo gut ten</h2>\\r\\n\\r\\n<p>Ein gefallts hinunter stabelle vor schlafen neunzehn gekommen. Mi ward in he lang fiel ja habt ware mehr. Verschwand launischen und gab betrachtet angenommen erhaltenen bei. Wurden laufen solang hol ehe rothfu gut. Wo nachtun da gerbers flecken in er filzhut sagerei. Des herunter kindbett vor nirgends. Taghell wo gelernt ja schoner pa heimweh. Esse hand ans zart filz ist.</p>'),
+(4, 1, 4, 'blue room', 3, 7, 29, 25, '<h2>Auskleiden weg brotkugeln getunchten dammerigen grundstuck flo gut ten</h2>\\r\\n\\r\\n<p>Ein gefallts hinunter stabelle vor schlafen neunzehn gekommen. Mi ward in he lang fiel ja habt ware mehr. Verschwand launischen und gab betrachtet angenommen erhaltenen bei. Wurden laufen solang hol ehe rothfu gut. Wo nachtun da gerbers flecken in er filzhut sagerei. Des herunter kindbett vor nirgends. Taghell wo gelernt ja schoner pa heimweh. Esse hand ans zart filz ist.</p>'),
+(5, 1, 3, 'red room', 2, 8, 29, 25, '<h2>Auskleiden weg brotkugeln getunchten dammerigen grundstuck flo gut ten</h2>\\r\\n\\r\\n<p>Ein gefallts hinunter stabelle vor schlafen neunzehn gekommen. Mi ward in he lang fiel ja habt ware mehr. Verschwand launischen und gab betrachtet angenommen erhaltenen bei. Wurden laufen solang hol ehe rothfu gut. Wo nachtun da gerbers flecken in er filzhut sagerei. Des herunter kindbett vor nirgends. Taghell wo gelernt ja schoner pa heimweh. Esse hand ans zart filz ist.</p>'),
+(6, 1, 3, 'penthouse', 1, 6, 50, 45, '<h2>Auskleiden weg brotkugeln getunchten dammerigen grundstuck flo gut ten</h2>\\r\\n\\r\\n<p>Ein gefallts hinunter stabelle vor schlafen neunzehn gekommen. Mi ward in he lang fiel ja habt ware mehr. Verschwand launischen und gab betrachtet angenommen erhaltenen bei. Wurden laufen solang hol ehe rothfu gut. Wo nachtun da gerbers flecken in er filzhut sagerei. Des herunter kindbett vor nirgends. Taghell wo gelernt ja schoner pa heimweh. Esse hand ans zart filz ist.</p>');";
 		dbDelta( $sql );
 
 /*
