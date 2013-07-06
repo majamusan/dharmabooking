@@ -20,7 +20,7 @@ class matrixCalender {
       $this->noNights = 	$this->settings['CnoNite'];
 		$this->weekStart = date('Y-m-d', time() + (86400 * $this->settings['cDaysAhead'])); 
 		if(!empty($_GET['noNights'])){
-			$this->noNights = 	$_GET['noNights'];
+			$this->noNights = 	$_GET['	'];
 			$this->weekStart = $_GET['startDate'];
 		}elseif(!empty($_POST['noNights'])){
 			$this->weekStart  	 = $_POST['weekStart'] ;
@@ -135,7 +135,8 @@ class matrixCalender {
 	displays the reantal calender
 	used as part of display and as ajax call
 	*/
-	function showCalendarMatrix(){
+	function showCalendarMatrix(){	
+		$this->firstAvailble = $this->endStamp;
 		?>
 		<table id="rentalCalendar" cellspacing="0" border="0">
 			<tr class="header nohover">
@@ -178,8 +179,10 @@ class matrixCalender {
 					</td>
 				</tr>
 			<?php endif?>
-		<?php if($this->rentalsThatAreAvaliable) : ?>
-			<tr><td colspan="20"><div id="non-avaliable	"><?=$this->firstAvailble?></div></td></tr>
+		<?php if($this->rentalsThatAreAvaliable < 1) : ?>
+			<tr><td colspan="20"><div id="non-avaliable"><p><strong>
+				<?=sprintf(__('There is no avalibty for one or more of your dates, the earliest avalible date is %s the %s of %s.',PLUGIN_TRANS_NAMESPACE),date('l',$this->firstAvailble),date('jS',$this->firstAvailble), date('F',$this->firstAvailble));?>
+			</strong></p></div></td></tr>
 		<?php endif ?>
 		</table>
 		<div id="bottomOfCalendar"></div>
@@ -213,17 +216,16 @@ class matrixCalender {
 			$n = 0;
 			$t = 1;
 			$lowestAvail = 99999;
-			$this->firstAvailble = false;
 
 			//this loop is done the wrong way round, it should make one call for all the data then proccess that 
 			for($i=$this->startStamp; $i<$this->endStamp; $i += 86400){
-            $data = $this->	getRentalOptionsMatrix	($i,($i+86400),$roomId);
+            $data = $this->getRentalOptionsMatrix	($i,($i+86400),$roomId);
 				$id = $data['rentalId'];
             if ($data['availab'] > 0  && $data['availab'] >= $roomMin ){
                $class	=	'avaliable';
 					$avali	= $data['availab'];
-					if(!$this->firstAvailble || $data['availab'] < $this->firstAvailble )
-						$this->firstAvailble = $data['availab'];
+					if($i < $this->firstAvailble )
+						$this->firstAvailble = $i;
             }else {
                $class	= 'full';
                $avali = 'x';
@@ -238,7 +240,6 @@ class matrixCalender {
             $n++;
 				$t++;
 			} 
-			
 			if($lowestAvail >= $roomMin ) {
             $options = '';
             for ($k = $roomMin; $k <= $lowestAvail; $k++){

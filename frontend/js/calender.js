@@ -1,35 +1,17 @@
 /*dyamanic variable setup*/
-	var currentTime = new Date()
-	var month=new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
-	var today  = currentTime.getDate()+' '+month[currentTime.getMonth()]+' '+currentTime.getFullYear();
-	var calendarBottom = jQuery('#bottomOfCalendar').offset().left;
-	var continueButtonPressed = false;
-	var timeCounter = timerBase;
-	var updateTime = 0;
+var currentTime = new Date()
+var month=new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
+var today  = currentTime.getDate()+' '+month[currentTime.getMonth()]+' '+currentTime.getFullYear();
+var calendarBottom = jQuery('#bottomOfCalendar').offset().left;
+var continueButtonPressed = false;
+var timeCounter = timerBase;
+var updateTime = 0;
 jQuery(function () {
 
 	/*countdown timer*/
-	if(updateTimeoutOn == 'yes'){
-		window.setInterval(function() {
-			updateTime = eval(timeCounter)- eval(1);
-			jQuery("b[id=time]").html(sec2min(updateTime));
-			if(updateTime == 0){
-				updateMatrix();
-				timeCounter = timerBase; 
-				jQuery('#timer').animate({fontSize: '80%',backgroundColor:'#C7FFC7'},1000); //don't like embeded colours &**#
-			}else{
-				if(updateTime <= timerWarning) { 
-					jQuery('html, body').animate({scrollTop:timer}, 'slow');
-					jQuery('#timer').animate({fontSize: '140%',backgroundColor:'#FF3C3C'},1200); 
-				}
-				timeCounter = updateTime;  
-			}
-		}, 1000);
-	}
+	if(updateTimeoutOn == 'yes'){		startTimer();	}
 	
-	/*
-	start jquery evetnts
-	*/
+	/*	start jquery evetnts*/
 	jQuery("#startDate").datepicker({dateFormat: "dd M yy", minDate: today});
 
 	if(!jQuery('#formFields #phone.required ').val() && !jQuery('#formFields #fullname.required ').val() && 
@@ -37,7 +19,8 @@ jQuery(function () {
 			jQuery("#bookFormSubmit, #finalCalendarButton").attr("disabled", true);
 	}
 	
-	jQuery("form#calendarForm #startDate, form#calendarForm #noNights").change(function () { updateMatrix(); });
+	jQuery("form#calendarForm #startDate, form#calendarForm #noNights").change(function () { updateMatrix(jQuery("#startDate").val()); });
+	
 	jQuery("#booking-plugin-blackout").click(function () { 		jQuery('#booking-plugin-blackout, .displaybox').fadeOut('fast'); });
 
 	jQuery('#calenderDiv').on('change', '.rentalSelector',function(){
@@ -163,8 +146,24 @@ var Validator = {
 		}
 	}
 };
-
-function updateMatrix() { 
+function startTimer(){	
+	window.setInterval(function() {
+		updateTime = eval(timeCounter)- eval(1);
+		jQuery("b[id=time]").html(sec2min(updateTime));
+		if(updateTime == 0){
+			updateMatrix(jQuery("#startDate").val());
+			timeCounter = timerBase; 
+			jQuery('#timer').animate({fontSize: '80%',backgroundColor:'#C7FFC7'},1000); //don't like embeded colours &**#
+		}else{
+			if(updateTime <= timerWarning) { 
+				jQuery('html, body').animate({scrollTop:timer}, 'slow');
+				jQuery('#timer').animate({fontSize: '140%',backgroundColor:'#FF3C3C'},1200); 
+			}
+			timeCounter = updateTime;  
+		}
+	}, 1000);
+}
+function updateMatrix(theStartDate) { 
 	jQuery('#rentalCalendar').mask(calenderLoadingString);
 	jQuery('#continue-button').slideUp('slow'); 
 
@@ -177,7 +176,7 @@ function updateMatrix() {
 	var request = jQuery.ajax({
 		url: refreshPage,
 		type: "GET",
-		data: {startDate: jQuery("#startDate").val() , noNights:  jQuery("#noNights").val() },
+		data: {startDate: theStartDate , noNights:  jQuery("#noNights").val() },
 		cache: false,
 		dataType: 'text'
 	});

@@ -30,6 +30,9 @@
 #feedback ul li.success{color:green;}
 
 .debugclass {width:100%;border-bottom:1px solid; gray}
+
+#non-avaliable {background-color: rgb(250, 179, 114);font-weight: bold;}
+
 /* 
 structrue
 */
