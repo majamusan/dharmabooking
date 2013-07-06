@@ -118,13 +118,9 @@ class reports extends dharmaAdmin {
 		wp_enqueue_script('jplotmini',	PLUGIN_ROOT_URL.'libs/jplot/jquery.jqplot.min.js',											array('jquery'));
 		wp_enqueue_script('jplotdate',	PLUGIN_ROOT_URL.'libs/jplot/plugins/jqplot.dateAxisRenderer.js',				array('jplotmini'));
 		wp_enqueue_script('jplottext',	PLUGIN_ROOT_URL.'libs/jplot/plugins/jqplot.canvasTextRenderer.js',			array('jplotmini'));
-		//wp_enqueue_script('jplottext',	PLUGIN_ROOT_URL.'libs/jplot/plugins/jqplot.canvasAxisLabelRenderer.js',			array('jplotmini'));
 		wp_enqueue_script('jplotcurs',	PLUGIN_ROOT_URL.'libs/jplot/plugins/jqplot.cursor.js',										array('jplotmini'));
 		wp_enqueue_script('jplothi',		PLUGIN_ROOT_URL.'libs/jplot/plugins/jqplot.highlighter.js',								array('jplotmini'));
-		//wp_enqueue_script('jplothi',		PLUGIN_ROOT_URL.'libs/jplot/plugins/jqplot.trendline.min.js',								array('jplotmini'));
-		//wp_enqueue_script('jplottick',	PLUGIN_ROOT_URL.'libs/jplot/plugins/jqplot.dragable.min.js',	array('jplotmini'));
 		wp_enqueue_script('jplottick',	PLUGIN_ROOT_URL.'libs/jplot/plugins/jqplot.canvasAxisTickRenderer.js',	array('jplotmini'));
-//       wp_register_style( 'myPluginStylesheet', plugins_url('stylesheet.css', __FILE__) );
 		?>
 		<link rel="stylesheet" type="text/css" href="<?=$this->url?>libs/jplot/jquery.jqplot.min.css" />
 		<?php 
