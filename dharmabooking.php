@@ -8,6 +8,30 @@ Author: Jamie MacDonlad
 Author URI: http://earthling.za.org
 */
 
+/*
+This project is intended to be a modular booking system and hopefully will become easy to use, modify and add too. 
+
+It is generally split into 2 parts, admin and front end with two current exceptions. 
+bookingcontrol.php, the object that manages users, invoices and bookings. 
+admin/dashboard.php, part of the admin interface that can also be accessed via short-code 
+both parts are called via dharmabooking.php
+
+code isn't very modular at the moment, though I hope for some feed back on how to improve this.
+current modular areas are 
+admin/reports, different reports for the admin
+fronted/gateways, different payment gateways
+fronted/css, different style sheets
+extra short-codes and widgets 
+
+
+It is under open GPL and I welcome any ideas.
+
+I am afraid documentation is a little sparse in some areas, so far its been a solo project. So, questions welcome :)
+
+please remember to internationalize any displayed strings 
+
+*/
+
 
 define( 'PLUGIN_ROOT_PATH', plugin_dir_path(__FILE__) );
 define( 'PLUGIN_ROOT_URL',plugins_url().'/dharma/' );
@@ -191,24 +215,20 @@ function dh_install_data() {
 (16, 'final page', 8, 'textmessage', 'shortcode', '', 'a message was sent to your phone [phone]')";
 		dbDelta( $sql );
 
-
-
 /*
-
-why the fook does nither of these work ? 
-
-
+why the fook does nither of these work ???!!!
 		$sql = 'INSERT INTO `'.$my_plugin_table.'` 
 (`option_name`, `autoload`, `option_value`) VALUES
 		("Dharma_Vars","yes",
 a:28:{s:12:"bookingState";s:7:"testing";s:10:"thanksPage";s:1:"5";s:10:"adminEmail";s:0:"";s:10:"replyEmail";s:0:"";s:8:"timezone";s:14:"Pacific/Wallis";s:12:"discountCard";s:3:"bbh";s:10:"arivalTime";s:17:"morning,afternoon";s:17:"calenderpopoutcss";s:48:"left: 174px;top: 20px;width: 385px;";s:10:"cDaysAhead";s:1:"1";s:7:"CnoNite";s:1:"8";s:7:"CnoDays";s:2:"15";s:7:"cssfile";s:9:"style.css";s:3:"css";s:0:"";s:11:"OfflineText";s:92:"<center><h1>---------------------------- Offline ----------------------------</h1> </center>";s:11:"TestingText";s:85:"<center><h1>---------------------------- Testing ----------------------</h1></center>";s:11:"paymenttype";s:4:"none";s:14:"paymentAccount";s:0:"";s:21:"payment_currency_code";s:3:"nzd";s:15:"payment_depoist";s:2:"14";s:11:"takeDeposit";s:3:"yes";s:8:"takeFull";s:3:"yes";s:8:"smsState";s:4:"down";s:7:"smstype";s:10:"clickatell";s:10:"smsAccount";s:5:"admin";s:11:"smsPassword";s:6:"password";s:6:"smsAPI";s:0:"";s:8:"smsPhone";s:0:"";s:8:"smsHours";s:0:"";}
 )';
 	dbDelta( $sql );//unsure if working or right way todo 
-*/
+
 		$wpdb->insert($wpdb->prefix . 'options',
 			array('option_name' => 'Dharma_Vars','autoload'=> 'yes', 'option_value' =>
 'a:33:{s:12:"bookingState";s:4:"live";s:10:"thanksPage";s:1:"5";s:10:"adminEmail";s:0:"";s:10:"replyEmail";s:0:"";s:8:"timezone";s:13:"Pacific/Nauru";s:14:"currancySymbol";s:3:"€";s:12:"discountCard";s:3:"bbh";s:10:"arivalTime";s:45:"11am,12am,1pm,2pm,3pm,4pm,5pm,6pm,8pm,9pm10pm";s:10:"cDaysAhead";s:1:"1";s:7:"CnoNite";s:1:"8";s:7:"CnoDays";s:2:"15";s:15:"updateTimeoutOn";s:3:"yes";s:10:"updateTime";s:1:"5";s:13:"updateWarning";s:2:"42";s:17:"calenderpopoutcss";s:48:"   left:174px;top:20px;width:385px;";s:6:"color1";s:0:"";s:7:"cssfile";s:9:"style.css";s:3:"css";s:0:"";s:11:"OfflineText";s:92:"<center><h1>---------------------------- Offline ----------------------------</h1> </center>";s:11:"TestingText";s:85:"<center><h1>---------------------------- Testing ----------------------</h1></center>";s:11:"paymenttype";s:4:"none";s:14:"paymentAccount";s:0:"";s:21:"payment_currency_code";s:3:"nzd";s:15:"payment_depoist";s:2:"14";s:11:"takeDeposit";s:3:"yes";s:8:"takeFull";s:3:"yes";s:8:"smsState";s:4:"down";s:7:"smstype";s:10:"clickatell";s:10:"smsAccount";s:5:"user";s:11:"smsPassword";s:6:"password";s:6:"smsAPI";s:0:"";s:8:"smsPhone";s:0:"";s:8:"smsHours";s:0:"";}'
 		));
+*/
 	}
 
 	add_option("dharma_db_version", $dbversion);
