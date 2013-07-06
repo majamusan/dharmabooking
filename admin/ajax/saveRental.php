@@ -12,5 +12,5 @@ $data = array(
 
 global $wpdb;
 $wpdb->update($wpdb->prefix.DATABASE_PREFIX.'roomtypes', $data, array('id' => $_POST['id']) );
-echo $_POST['name'].' has been updated';
+echo $_POST['name'].': saved';
 ?>

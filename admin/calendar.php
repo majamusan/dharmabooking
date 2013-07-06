@@ -2,7 +2,6 @@
 /* this code is thanks to mataias i have changed it around a little but is almost all thats left of his code*/
 function insertBooking ($idguest, $idroomtype, $beds, $dates, $invoice,$offsets = null ) { // offsets is reall post data array... 
  	global $wpdb;
-    //this var is very convenient for the admin manual changes.
     if(empty($offsets['time'])){
         $offsets[0] = intval($offsets[0]);
         $offsets[1] = intval($offsets[1]);        
@@ -107,7 +106,6 @@ $dateList = array();
 $monthList = array();
 $date = new DateTime($from);
 $dayNameList = array('m','t','w','t','f','s','s');
-//echo  $date->format('w---U-I-O-P-A-S-D-F-G-H-J-K-L-Z-X-C-V-B-N-M');
 for ($i = 0; $i < $days; $i++) {
     $dateList[] = $date->format('d');
     $dayList[] = $date->format('w');
@@ -137,17 +135,15 @@ $url =  PLUGIN_ROOT_URL;
 	<script type="text/javascript">
 	<!--
 	//moved to main script file after code rework
-	$(function () {
-		$("input.beds").click(function () { this.select(); })  .change(function () {
-			$(this).addClass("edited");
+	jQuery(function () {
+		jQuery("input.beds").click(function () { this.select(); })  .change(function () {
+			jQuery(this).addClass("edited");
 			var change = this.id.split("-");
 			if (!(change[0] in changedRooms))
 				changedRooms[change[0]] = {};
 			changedRooms[change[0]][change[1]] = this.defaultValue - this.value;
 			if (isNaN(this.value) || this.value < 0)
 				alert("WARNING! entering '"+this.value+"' will produce an error.");
-			if (typoChecker && this.value > 10)
-				alert("WARNING! you just entered "+this.value)
 		});
 	});
 	-->
@@ -186,8 +182,6 @@ $url =  PLUGIN_ROOT_URL;
                         $class = 'negavail';
                     }else{
                     }
-                    //$fullness = ((($dateAvailability / $roomtypes[$roomId]['capacity'])+1) * 100);
-                    //style=" background: -moz-linear-gradient(bottom, #FAFAFA 0%, #FFbbFF <?=intval($fullness - 10)% #248C2D <?=intval($fullness )%, #A7EBB2 100%);"
                     ?>
                     <td class="beds <?=$class?>">
 								<?php if($checkinpage): ?> 

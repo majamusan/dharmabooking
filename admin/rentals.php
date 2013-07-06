@@ -1,7 +1,11 @@
 <?
-/* this code is mostly thanks to mataias */
-$pluginUrl = PLUGIN_ROOT_URL;
+/*next one up for a complet rework !*/
+require_once('dharmaAdmin.php');
+
 global $wpdb;
+
+$pluginUrl = PLUGIN_ROOT_URL;
+$dharmaAdmin = new dharmaAdmin();
 $addItemOptions = array('menu Order','item name','minimum','capacity','price','discount price','discription');
 
 if ($_POST['action'] == 'delete') {
@@ -15,59 +19,55 @@ if ($_POST['itemadd'] == 'yes') {
     mysql_query($sql);
 }
 $roomtypes = $wpdb->get_results("SELECT id,menuorder,name,minimum,capacity,price,discount,discription FROM ".$wpdb->prefix.DATABASE_PREFIX."roomtypes WHERE active = 1 ORDER BY menuorder",ARRAY_A );
+
+$dharmaAdmin->includeCSSnDivs();
+$dharmaAdmin->includeScripts();
 ?>
 
-<link type="text/css" href="<?=$pluginUrl?>admin/styles.css" rel="stylesheet" />
-<script type="text/javascript" src="<?=$pluginUrl?>libs/jquery-1.7.1.min.js"></script>
-<script type="text/javascript" src="<?=$pluginUrl?>libs/jquery-ui-1.8.5.custom.min.js"></script>
-<script type="text/javascript"> var saveRentalAjax = "<?=$pluginUrl?>admin/ajax/saveRental.php"</script>
-<script type="text/javascript" src="<?=$pluginUrl?>admin/scripts.js"> </script>
 <script type="text/javascript">
-<!--
+var saveRentalAjax = "<?=$pluginUrl?>admin/ajax/saveRental.php"
+
 //after rework of functions it can go into main scripts file, if they are nice 
+jQuery(function () {
+	jQuery(".saveRentalButton").click(function(){
+		jQuery('#responce-box').html('Saving...');
+		SaveRental(jQuery(this).closest("tr").find('form').serialize(),jQuery(this).closest("tr"));
+	});
+	jQuery("input[type=button].rentalcloseButton").click(function () {
+	  	jQuery('#info-'+this.id).hide('slow', function() { });
+     	jQuery('#blackout').hide('fast', function() { });	
+		jQuery('#'+this.id).addClass("edited");
+		jQuery('#'+this.id).val("edited");
+	});
+	jQuery("input[type=button].editButton").click(function () {
+	  	jQuery('#info-'+this.id).show('slow', function() { });
+     	jQuery('#blackout').show('fast', function() { });	
+	});
 
-$(function () {
-	$(".saveRentalButton").click(function(){	
-		SaveRental($(this).closest("tr").find('form').serialize(),$(this).closest("tr"));
+	jQuery("input[type=button]#addButton").click(function () {
+     	jQuery('#addItemDiv').show('slow', function() { });
+     	jQuery('#blackout').show('fast', function() { });
 	});
-	$("input[type=button].rentalcloseButton").click(function () {
-	  	$('#info-'+this.id).hide('slow', function() { });
-     	$('#blackout').hide('fast', function() { });	
-		$('#'+this.id).addClass("edited");
-		$('#'+this.id).val("edited");
+	jQuery("input[type=button]#addItemButton").click(function (){
+      jQuery("#addItemForm").submit();
 	});
-	$("input[type=button].editButton").click(function () {
-	  	$('#info-'+this.id).show('slow', function() { });
-     	$('#blackout').show('fast', function() { });	
-	});
-
-	$("input[type=button]#addButton").click(function () {
-     	$('#addItemDiv').show('slow', function() { });
-     	$('#blackout').show('fast', function() { });
-	});
-	$("input[type=button]#addItemButton").click(function (){
-       $("#addItemForm").submit();
-	});
-	$("input[type=button]#deleteButton").click(function () {
-		var nameText = $(this).closest('tr').find('.name').val()
+	jQuery('.deleteButton').click(function () {
+		var nameText = jQuery(this).closest('tr').find('.name').val();
      	if (confirm("Are you sure you want to delete \""+nameText+"\" ?")) {
-				$('#deleteItemId').val($(this).closest("tr").find('.rentalId').val());
-   	   	$('#deleteItemForm').submit();
+			jQuery('#deleteItemId').val($(this).closest("tr").find('.rentalId').val());
+			alert(jQuery('#deleteItemId').val());
+   	   jQuery('#deleteItemForm').submit();
       }
 		return false;
 	});
-	//$(this).closest("tr")
-	$('#saveEditButton').click(function(){
-			$(this).closest("table").find("input[type=text]").clone().appendTo("#theform");
-			$(this).closest("table").find("select").clone().appendTo("#theform");
-      $('body').css('cursor','wait');
+	jQuery('#saveEditButton').click(function(){
+		jQuery(this).closest("table").find("input[type=text]").clone().appendTo("#theform");
+		jQuery(this).closest("table").find("select").clone().appendTo("#theform");
+      jQuery('body').css('cursor','wait');
 	});
 });
--->
 </script>
-<div id="blackout"></div>
-<h3 id="dbox"></h3>
-<table  class="rentalRow" cellspacing="0">
+<table  class="rentalRow floatleft" cellspacing="0">
 	<tr>
 		<th>Order</th>
 		<th>Name</th>
@@ -102,13 +102,16 @@ $(function () {
 			<td><button type="button" class="saveRentalButton">Save</button></td>
 			<td>
 				<input type="hidden" value="<?= $theId?>" class="rentalId" />
-				<input type="button" value="Delete" id="deleteButton" />
+				<button class="deleteButton" >Delete</button>
 			</td>
 		</tr>
 		</form>
 	<? } ?>
 </table>
 
+<h1 id="responce-box"></h1>
+
+<div class="clear"></div>
 <h2><input  type="button" id="addButton" value="<?=__('Add an rental',PLUGIN_TRANS_NAMESPACE)?>" /></h2>
 
 <form id="deleteItemForm" method="POST" action=""> 
@@ -119,13 +122,13 @@ $(function () {
 <div id="addItemDiv" class="popupup-box">
 	<h2>Add a new rental Item</h2>
 	<form id="addItemForm"  method="POST" action="">
-    <input type="hidden" name="itemadd" value="yes" />
-    <?php foreach($addItemOptions as $anOption ): ?>
-		<div class="clear">
-        <label for="<?=$anOption?>"><?=ucFirst($anOption)?></label>
-		  <input type="text" id="<?=$anOption?>" name="<?=$anOption?>"/>
-		</div>  
-    <?php endforeach ?>
+		<input type="hidden" name="itemadd" value="yes" />
+		<?php foreach($addItemOptions as $anOption ): ?>
+			<div class="clear">
+			  <label for="<?=$anOption?>"><?=ucFirst($anOption)?></label>
+			  <input type="text" id="<?=$anOption?>" name="<?=$anOption?>"/>
+			</div>  
+		<?php endforeach ?>
 		<h3>
 			<input type="button" value="Cancel" id="cancelButton" /> 
 			<input type="button" value="Add" id="addItemButton" />

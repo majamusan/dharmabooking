@@ -225,7 +225,7 @@ function getDayDetails(input){
 function SaveRental(input, theRow){
 	jQuery(theRow).removeClass("savedRental");
 	var request = jQuery.ajax({url: saveRentalAjax,type: "POST",data: input,cache: false,dataType: 'text'});
-	request.done(function(msg) {jQuery(theRow).addClass("savedRental");});
+	request.done(function(msg) {jQuery(theRow).addClass("savedRental");jQuery('#responce-box').html(msg);});
 	request.fail(function(jqXHR, textStatus) { alert(textStatus+ "Request failed, try again" );});
 }
 

@@ -14,7 +14,7 @@ A little open source booking app, made for hostels, backpackers, hotels, lodges 
 <li>graphical reporting </li>
 </ul>
 
-<h2>Install instructions.</h2>
+<h2>install instructions.</h2>
 
 <ul>
 <li> install and activate plugin</li>
@@ -26,8 +26,7 @@ A little open source booking app, made for hostels, backpackers, hotels, lodges 
 <h2>demo</h2>
 <em>to view a demo click <a href="http://earthling.za.org">here</a>.</em>
 
-<h2>Compatablity</h2>
-
+<h2>compatablity</h2>
 <ul>
 <li>tested for Wordpress 3.5+.</li>
 <li>jQuery 1.8+</li>
